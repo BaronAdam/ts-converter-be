@@ -13,13 +13,13 @@ public class ConvertAtsIngameIntoRealTime
     [Function("ConvertAtsIngameCityIntoRealTime")]
     [OpenApiOperation(operationId: "ConvertAtsIngameCityIntoRealTime")]
     [OpenApiParameter(name: "minutes", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "Number of minutes inside city to convert to real time")]
-    [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "applicaiton/json", bodyType: typeof(ConvertResponse), Description = "Ingame time converted to real time")]
+    [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(ConvertResponse), Description = "Ingame time converted to real time")]
     public HttpResponseData City([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "convert/ats/city/{minutes:int}")] HttpRequestData req)
     {
         var requestMinutes = Convert.ToInt32(req.Url.AbsoluteUri.Split('/').Last()) / 3m;
 
         var response = req.CreateResponse(HttpStatusCode.OK);
-        response.Headers.Add("Content-Type", "applicaiton/json; charset=utf-8");
+        response.Headers.Add("Content-Type", "application/json");
 
         var minutes = (int)(requestMinutes % 60);
         var hours = (int)(requestMinutes / 60);
@@ -39,13 +39,13 @@ public class ConvertAtsIngameIntoRealTime
     [Function("ConvertAtsIngameOutsideIntoRealTime")]
     [OpenApiOperation(operationId: "ConvertAtsIngameOutsideIntoRealTime")]
     [OpenApiParameter(name: "minutes", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "Number of minutes outside of city to convert to real time")]
-    [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "applicaiton/json", bodyType: typeof(ConvertResponse), Description = "Ingame time converted to real time")]
+    [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(ConvertResponse), Description = "Ingame time converted to real time")]
     public HttpResponseData Outside([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "convert/ats/outside/{minutes:int}")] HttpRequestData req)
     {
         var requestMinutes = Convert.ToInt32(req.Url.AbsoluteUri.Split('/').Last()) / 20m;
 
         var response = req.CreateResponse(HttpStatusCode.OK);
-        response.Headers.Add("Content-Type", "applicaiton/json; charset=utf-8");
+        response.Headers.Add("Content-Type", "application/json");
 
         var minutes = (int)(requestMinutes % 60);
         var hours = (int)(requestMinutes / 60);
