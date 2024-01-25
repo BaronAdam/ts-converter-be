@@ -11,7 +11,7 @@ namespace TSConvert;
 public class ConvertAtsIngameIntoRealTime
 {
     [Function("ConvertAtsIngameCityIntoRealTime")]
-    [OpenApiOperation(operationId: "ConvertAtsIngameCityIntoRealTime")]
+    [OpenApiOperation(operationId: "ConvertAtsIngameCityIntoRealTime", tags: ["ATS"])]
     [OpenApiParameter(name: "minutes", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "Number of minutes inside city to convert to real time")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(ConvertResponse), Description = "Ingame time converted to real time")]
     public HttpResponseData City([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "convert/ats/city/{minutes:int}")] HttpRequestData req)
@@ -24,7 +24,8 @@ public class ConvertAtsIngameIntoRealTime
         var minutes = (int)(requestMinutes % 60);
         var hours = (int)(requestMinutes / 60);
 
-        var responseData = new ConvertResponse {
+        var responseData = new ConvertResponse
+        {
             Minutes = minutes,
             Hours = hours
         };
@@ -37,7 +38,7 @@ public class ConvertAtsIngameIntoRealTime
     }
 
     [Function("ConvertAtsIngameOutsideIntoRealTime")]
-    [OpenApiOperation(operationId: "ConvertAtsIngameOutsideIntoRealTime")]
+    [OpenApiOperation(operationId: "ConvertAtsIngameOutsideIntoRealTime", tags: ["ATS"])]
     [OpenApiParameter(name: "minutes", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "Number of minutes outside of city to convert to real time")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(ConvertResponse), Description = "Ingame time converted to real time")]
     public HttpResponseData Outside([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "convert/ats/outside/{minutes:int}")] HttpRequestData req)
@@ -50,7 +51,8 @@ public class ConvertAtsIngameIntoRealTime
         var minutes = (int)(requestMinutes % 60);
         var hours = (int)(requestMinutes / 60);
 
-        var responseData = new ConvertResponse {
+        var responseData = new ConvertResponse
+        {
             Minutes = minutes,
             Hours = hours
         };
