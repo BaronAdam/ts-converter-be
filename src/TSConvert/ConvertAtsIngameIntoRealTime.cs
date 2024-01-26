@@ -1,14 +1,14 @@
 using System.Net;
-using System.Text.Json;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.OpenApi.Models;
 using TSConvert.Models;
+using TSConvert.Services.Interfaces;
 
 namespace TSConvert;
 
-public class ConvertAtsIngameIntoRealTime
+public class ConvertAtsIngameIntoRealTime(IResponseService responseService)
 {
     [Function("ConvertAtsIngameCityIntoRealTime")]
     [OpenApiOperation(operationId: "ConvertAtsIngameCityIntoRealTime", tags: ["ATS"])]
@@ -18,23 +18,7 @@ public class ConvertAtsIngameIntoRealTime
     {
         var requestMinutes = Convert.ToInt32(req.Url.AbsoluteUri.Split('/').Last()) / 3m;
 
-        var response = req.CreateResponse(HttpStatusCode.OK);
-        response.Headers.Add("Content-Type", "application/json");
-
-        var minutes = (int)(requestMinutes % 60);
-        var hours = (int)(requestMinutes / 60);
-
-        var responseData = new ConvertResponse
-        {
-            Minutes = minutes,
-            Hours = hours
-        };
-
-        var json = JsonSerializer.Serialize(responseData);
-
-        response.WriteString(json);
-
-        return response;
+        return responseService.CreateResponse(req, requestMinutes);
     }
 
     [Function("ConvertAtsIngameOutsideIntoRealTime")]
@@ -45,22 +29,6 @@ public class ConvertAtsIngameIntoRealTime
     {
         var requestMinutes = Convert.ToInt32(req.Url.AbsoluteUri.Split('/').Last()) / 20m;
 
-        var response = req.CreateResponse(HttpStatusCode.OK);
-        response.Headers.Add("Content-Type", "application/json");
-
-        var minutes = (int)(requestMinutes % 60);
-        var hours = (int)(requestMinutes / 60);
-
-        var responseData = new ConvertResponse
-        {
-            Minutes = minutes,
-            Hours = hours
-        };
-
-        var json = JsonSerializer.Serialize(responseData);
-
-        response.WriteString(json);
-
-        return response;
+        return responseService.CreateResponse(req, requestMinutes);
     }
 }
