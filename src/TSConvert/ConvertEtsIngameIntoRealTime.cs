@@ -1,4 +1,5 @@
 using System.Net;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
@@ -14,9 +15,11 @@ public class ConvertEtsIngameIntoRealTime(IResponseService responseService)
     [OpenApiOperation(operationId: "ConvertAtsIngameCityIntoRealTime", tags: ["ETS"])]
     [OpenApiParameter(name: "minutes", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "Number of minutes inside city to convert to real time")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(ConvertResponse), Description = "Ingame time converted to real time")]
-    public HttpResponseData City([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "convert/ets/city/{minutes:int}")] HttpRequestData req)
+    public HttpResponseData City(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "convert/ets/city/{minutes:int}")] HttpRequestData req,
+        [FromRoute] int minutes)
     {
-        var requestMinutes = Convert.ToInt32(req.Url.AbsoluteUri.Split('/').Last()) / 3m;
+        var requestMinutes = minutes / 3m;
 
         return responseService.CreateResponse(req, requestMinutes);
     }
@@ -25,9 +28,11 @@ public class ConvertEtsIngameIntoRealTime(IResponseService responseService)
     [OpenApiOperation(operationId: "ConvertAtsIngameOutsideMainlandIntoRealTime", tags: ["ETS"])]
     [OpenApiParameter(name: "minutes", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "Number of minutes outside of city on the mainland Europe to convert to real time")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(ConvertResponse), Description = "Ingame time converted to real time")]
-    public HttpResponseData Outside([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "convert/ets/outside/mainland/{minutes:int}")] HttpRequestData req)
+    public HttpResponseData Outside(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "convert/ets/outside/mainland/{minutes:int}")] HttpRequestData req,
+        [FromRoute] int minutes)
     {
-        var requestMinutes = Convert.ToInt32(req.Url.AbsoluteUri.Split('/').Last()) / 19m;
+        var requestMinutes = minutes / 19m;
 
         return responseService.CreateResponse(req, requestMinutes);
     }
@@ -36,9 +41,11 @@ public class ConvertEtsIngameIntoRealTime(IResponseService responseService)
     [OpenApiOperation(operationId: "ConvertAtsIngameOutsideUkIntoRealTime", tags: ["ETS"])]
     [OpenApiParameter(name: "minutes", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "Number of minutes outside of city in the UK to convert to real time")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(ConvertResponse), Description = "Ingame time converted to real time")]
-    public HttpResponseData OutsideUk([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "convert/ets/outside/uk/{minutes:int}")] HttpRequestData req)
+    public HttpResponseData OutsideUk(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "convert/ets/outside/uk/{minutes:int}")] HttpRequestData req,
+        [FromRoute] int minutes)
     {
-        var requestMinutes = Convert.ToInt32(req.Url.AbsoluteUri.Split('/').Last()) / 15m;
+        var requestMinutes = minutes / 15m;
 
         return responseService.CreateResponse(req, requestMinutes);
     }
