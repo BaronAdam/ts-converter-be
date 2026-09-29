@@ -12,7 +12,7 @@ namespace TSConvert;
 public class ConvertEtsIngameIntoRealTime(IResponseService responseService)
 {
     [Function("ConvertEtsIngameCityIntoRealTime")]
-    [OpenApiOperation(operationId: "ConvertAtsIngameCityIntoRealTime", tags: ["ETS"])]
+    [OpenApiOperation(operationId: "ConvertEtsIngameCityIntoRealTime", tags: ["ETS"])]
     [OpenApiParameter(name: "minutes", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "Number of minutes inside city to convert to real time")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(ConvertResponse), Description = "Ingame time converted to real time")]
     public HttpResponseData City(
@@ -25,7 +25,7 @@ public class ConvertEtsIngameIntoRealTime(IResponseService responseService)
     }
 
     [Function("ConvertEtsIngameOutsideMainlandIntoRealTime")]
-    [OpenApiOperation(operationId: "ConvertAtsIngameOutsideMainlandIntoRealTime", tags: ["ETS"])]
+    [OpenApiOperation(operationId: "ConvertEtsIngameOutsideMainlandIntoRealTime", tags: ["ETS"])]
     [OpenApiParameter(name: "minutes", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "Number of minutes outside of city on the mainland Europe to convert to real time")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(ConvertResponse), Description = "Ingame time converted to real time")]
     public HttpResponseData Outside(
@@ -38,7 +38,7 @@ public class ConvertEtsIngameIntoRealTime(IResponseService responseService)
     }
 
     [Function("ConvertEtsIngameOutsideUkIntoRealTime")]
-    [OpenApiOperation(operationId: "ConvertAtsIngameOutsideUkIntoRealTime", tags: ["ETS"])]
+    [OpenApiOperation(operationId: "ConvertEtsIngameOutsideUkIntoRealTime", tags: ["ETS"])]
     [OpenApiParameter(name: "minutes", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "Number of minutes outside of city in the UK to convert to real time")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(ConvertResponse), Description = "Ingame time converted to real time")]
     public HttpResponseData OutsideUk(
